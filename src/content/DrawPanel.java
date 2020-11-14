@@ -8,7 +8,7 @@ import java.util.*;
 public class DrawPanel extends JPanel {
 
 	private static final long serialVersionUID = 7114066347061701832L;
-	private final Set<Map<Point, Pair<Color, Integer>>> lines; 
+	private Set<Map<Point, Pair<Color, Integer>>> lines; 
 	private Map<Point, Pair<Color, Integer>> circles;
 	
 	public DrawPanel() {
@@ -29,13 +29,17 @@ public class DrawPanel extends JPanel {
 		}
 	}
 	
+	public void deleteEverything() {
+		this.lines = new HashSet<>();
+	}
+	
 	public void setPenSize(int size) {	
 		for(Pair<Color, Integer> lastLine : this.circles.values()) {
 			lastLine.second = size;
 		}
 	}
 	
-	public void changeColor(Color c) {
+	public void setColor(Color c) {
 		for(Pair<Color, Integer> pair : this.circles.values()) {
 			pair.first = c;
 		}
@@ -49,16 +53,17 @@ public class DrawPanel extends JPanel {
 	
 	// Metodo per aggiungere nuovi cerchi
 	public void addPoint(int x, int y){
-		//final Color c = new Color(RND.nextInt(256),RND.nextInt(256),RND.nextInt(256));
 		int lastSize = 1;
 		Color c1 = Color.BLACK;
 		for(Pair<Color, Integer> c : this.circles.values()) {
 			lastSize = c.second;
 			c1 = c.first;
 		}
+		
 		if(lastSize < 1) {
 			lastSize = 1;
 		}
+		
 		this.circles.put(new Point(x-(lastSize/2), y-(lastSize)/2), new Pair<Color, Integer>(c1, lastSize));
 	}
 	
