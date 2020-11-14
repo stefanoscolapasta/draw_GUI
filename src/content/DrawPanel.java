@@ -35,6 +35,12 @@ public class DrawPanel extends JPanel {
 		}
 	}
 	
+	public void changeColor(Color c) {
+		for(Pair<Color, Integer> pair : this.circles.values()) {
+			pair.first = c;
+		}
+	}
+	
 	public void createLineObj() {
 		this.lines.add(this.circles);
 		this.circles = new HashMap<>();
@@ -44,20 +50,16 @@ public class DrawPanel extends JPanel {
 	// Metodo per aggiungere nuovi cerchi
 	public void addPoint(int x, int y){
 		//final Color c = new Color(RND.nextInt(256),RND.nextInt(256),RND.nextInt(256));
-		Iterator<Map<Point, Pair<Color, Integer>>> it = this.lines.iterator();
-		Map<Point, Pair<Color, Integer>> last = new HashMap<>();
-		while(it.hasNext()) {
-			last = it.next();
-		}
-		
 		int lastSize = 1;
-		for(Map.Entry<Point, Pair<Color, Integer>> c : last.entrySet()) {
-			lastSize = c.getValue().second;
+		Color c1 = Color.BLACK;
+		for(Pair<Color, Integer> c : this.circles.values()) {
+			lastSize = c.second;
+			c1 = c.first;
 		}
 		if(lastSize < 1) {
 			lastSize = 1;
 		}
-		this.circles.put(new Point(x-(lastSize/2), y-(lastSize)/2), new Pair<Color, Integer>(Color.BLACK, lastSize));
+		this.circles.put(new Point(x-(lastSize/2), y-(lastSize)/2), new Pair<Color, Integer>(c1, lastSize));
 	}
 	
 }

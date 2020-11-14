@@ -13,24 +13,43 @@ import javax.swing.border.*;
 import javax.swing.event.MouseInputAdapter;
 
 public class MyMouseAdapter extends MouseAdapter{
-	    private final DrawPanel pCenter;
+	    private static final int MIN_PEN_SIZE = 1;
+	    private static final int MAX_PEN_SIZE = 30;
+	    private static final int STARTING_PEN_SIZE = 30;
+		private final DrawPanel pCenter;
 	    private final JSlider penSize;
 	    private JLabel penSizeText;
 	    private final MyFrame frame;
 	    private final JPanel pEast;
+	    private final ColorButton bColor;
 	    
 	    public MyMouseAdapter() {
 	    	this.frame = new MyFrame("Canvas Example",new BorderLayout());
-	    	this.penSize = new JSlider(JSlider.HORIZONTAL, 1, 20, 10); 
+	    	this.penSize = new JSlider(JSlider.HORIZONTAL, MIN_PEN_SIZE, MAX_PEN_SIZE, STARTING_PEN_SIZE); 
 	    	this.pCenter = new DrawPanel();
-	    	this.pEast = new JPanel(new FlowLayout(FlowLayout.CENTER,10,10));
+	    	this.bColor = new ColorButton("RED", Color.RED);
+	    	bColor.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					pCenter.changeColor(MyMouseAdapter.this.bColor.getColor());
+				}
+			});
+	    	this.pEast = new JPanel();
+	    	this.pEast.setLayout(new BoxLayout(this.pEast, BoxLayout.Y_AXIS));
+	    	this.pEast.setBackground(Color.WHITE);
+	    	this.pEast.setBorder(new TitledBorder("Change settings here"));
 	    	this.setPenSizeJSlider();	
 	    	this.setPanel();	
 			pEast.add(penSize);
-			pEast.add(penSizeText);	
-			
+			this.addVerticalSpacing(this.pEast, 10);
+			pEast.add(penSizeText);
+			this.addVerticalSpacing(this.pEast, 10);
+			pEast.add(bColor);		
 			this.setFrameView();	
 		}
+	    
+	    private void addVerticalSpacing(JPanel target, int Yspacing) {
+	    	target.add(Box.createVerticalStrut(Yspacing));
+	    }
 	    
 	    private void setFrameView() {
 	    	this.frame.getMainPanel().add(pCenter,BorderLayout.CENTER);
@@ -51,14 +70,14 @@ public class MyMouseAdapter extends MouseAdapter{
 	    }
 
 	    public void mouseReleased(MouseEvent e) {
-	            pCenter.createLineObj();
-	            pCenter.repaint();
+	    	pCenter.createLineObj();
+	    	pCenter.repaint(); 
 	    }
  
-	    public void mouseDragged(MouseEvent e) { 
-	    		pCenter.repaint();
+	    public void mouseDragged(MouseEvent e) { 	
 				pCenter.addPoint(e.getX(), e.getY());
 				pCenter.setPenSize(penSize.getValue());
+				pCenter.repaint();
 	    }
 	    
 	    public void show(){
