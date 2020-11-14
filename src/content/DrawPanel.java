@@ -1,6 +1,8 @@
 package content;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
+
 import javax.swing.*;
 import java.util.*;
 
@@ -16,9 +18,9 @@ public class DrawPanel extends JPanel {
 		this.lines = new HashSet<>(); 
 		this.lines.add(this.circles);
 	}
-	
+
 	// override del metodo di disegno  
-	protected void paintComponent(Graphics g) {
+	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		
 		for (Map<Point, Pair<Color, Integer>> e : this.lines) {

@@ -9,19 +9,18 @@ import java.awt.event.MouseEvent;
 import javax.swing.JButton;
 
 public class ColorButton extends JButton {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-	final Color c;
-	boolean isColored;
-	int clickCount;
-	public ColorButton(String name, Color c, MyMouseAdapter m) {
+	private final Color c;
+	private boolean isColored;
+	private int clickCount;
+	
+	public ColorButton(String name, Color c, guiHandler m) {
 		super(name);
 		this.c = c;
 		this.isColored = false;
 		this.clickCount = 0;
 		this.setBackground(Color.LIGHT_GRAY);
+		
 		this.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {	
 				if(getClickCount() < 1) {
@@ -39,6 +38,7 @@ public class ColorButton extends JButton {
 				
 			}	
 		});	
+		
 		this.addMouseListener(new MouseAdapter() {
     		public void mouseEntered(MouseEvent e) {
     			ColorButton.this.setBackground(ColorButton.this.getButtonColor());

@@ -14,7 +14,7 @@ import javax.swing.*;
 import javax.swing.border.*;
 import javax.swing.event.MouseInputAdapter;
 
-public class MyMouseAdapter extends MouseAdapter{
+public class guiHandler extends MouseAdapter{
 	    private static final int MIN_PEN_SIZE = 1;
 	    private static final int MAX_PEN_SIZE = 30;
 	    private static final int STARTING_PEN_SIZE = 30;
@@ -27,25 +27,30 @@ public class MyMouseAdapter extends MouseAdapter{
 	    private final Set<ColorButton> bColors;
 	    private final JButton bDelete;
 	    private Color currentColor = Color.BLACK;
+	    private final MyMouseListener myListener;
 	    
-	    public MyMouseAdapter() {
+	    public guiHandler() {
 	    	this.frame = new MyFrame("Canvas Example",new BorderLayout());
 	    	this.penSize = new JSlider(JSlider.HORIZONTAL, MIN_PEN_SIZE, MAX_PEN_SIZE, STARTING_PEN_SIZE); 
 	    	this.pcenterPanel = new DrawPanel();
 	    	this.bColors = new HashSet<>();
+	    	
+	    	this.myListener = new MyMouseListener(this);
+	    	
 	    	this.bDelete = new JButton("Erase everything");
 	    	this.bDelete.addActionListener(new ActionListener() {		
 				public void actionPerformed(ActionEvent arg0) {
-					MyMouseAdapter.this.pcenterPanel.deleteEverything();	
-					MyMouseAdapter.this.pcenterPanel.repaint();
+					guiHandler.this.getpCenterPanel().deleteEverything();	
+					guiHandler.this.getpCenterPanel().repaint();
 				}
 			});
+	    	
 	    	this.selectColorText = new JLabel("Select color");
-	    	bColors.add(new ColorButton("RED", Color.RED, this));
-	    	bColors.add(new ColorButton("GREEN", Color.GREEN, this));
-	    	bColors.add(new ColorButton("DARK_GRAY", Color.DARK_GRAY, this));
-	    	bColors.add(new ColorButton("YELLOW", Color.YELLOW, this));
-	    	bColors.add(new ColorButton("BLACK", Color.BLACK, this));
+	    	this.bColors.add(new ColorButton("RED", Color.RED, this));
+	    	this.bColors.add(new ColorButton("GREEN", Color.GREEN, this));
+	    	this.bColors.add(new ColorButton("DARK_GRAY", Color.DARK_GRAY, this));
+	    	this.bColors.add(new ColorButton("YELLOW", Color.YELLOW, this));
+	    	this.bColors.add(new ColorButton("BLACK", Color.BLACK, this));
 	    	this.pEast = new JPanel();
 	    	this.pEast.setLayout(new BoxLayout(this.pEast, BoxLayout.Y_AXIS));
 	    	this.pEast.setBackground(Color.WHITE);
@@ -53,19 +58,19 @@ public class MyMouseAdapter extends MouseAdapter{
 	    	this.setPenSizeJSlider();	
 	    	this.setPanel();
 	    	this.addVerticalSpacing(this.pEast, 25);
-	    	pEast.add(penSizeText);
+	    	this.pEast.add(this.penSizeText);
 			this.addVerticalSpacing(this.pEast, 10);
-			pEast.add(penSize);
+			this.pEast.add(this.penSize);
 			this.addVerticalSpacing(this.pEast, 10);
-			pEast.add(selectColorText);
+			this.pEast.add(this.selectColorText);
 			this.addVerticalSpacing(this.pEast, 10);
 			//Adding all buttons to pEast
-			for(ColorButton b : bColors) {
-				pEast.add(b);
+			for(ColorButton b : this.bColors) {
+				this.pEast.add(b);
 				this.addVerticalSpacing(this.pEast, 5);
 			}		
 			this.addVerticalSpacing(this.pEast, 10);
-			pEast.add(this.bDelete);
+			this.pEast.add(this.bDelete);
 			
 			this.setFrameView();	
 		}
@@ -75,15 +80,15 @@ public class MyMouseAdapter extends MouseAdapter{
 	    }
 	    
 	    private void setFrameView() {
-	    	this.frame.getMainPanel().add(pcenterPanel,BorderLayout.CENTER);
-	    	this.frame.getMainPanel().add(pEast,BorderLayout.EAST);
+	    	this.frame.getMainPanel().add(this.getpCenterPanel(),BorderLayout.CENTER);
+	    	this.frame.getMainPanel().add(this.pEast,BorderLayout.EAST);
 	    		
 		}
 
 		private void setPanel() {
-	    	this.pcenterPanel.setBorder(new TitledBorder("Draw something here.."));
-	    	this.pcenterPanel.addMouseMotionListener(this);
-	    	this.pcenterPanel.addMouseListener(this);
+	    	this.getpCenterPanel().setBorder(new TitledBorder("Draw something here.."));
+	    	this.getpCenterPanel().addMouseListener(this.myListener);
+	    	this.getpCenterPanel().addMouseMotionListener(this.myListener);
 	    }
 	    
 	    private void setPenSizeJSlider() {
@@ -103,17 +108,9 @@ public class MyMouseAdapter extends MouseAdapter{
 	    public Color getCurrentColor() {
 	    	return this.currentColor;
 	    }
-	    
-	    public void mouseReleased(MouseEvent e) {
-	    	pcenterPanel.createLineObj();
-	    	pcenterPanel.repaint(); 
-	    }
- 
-	    public void mouseDragged(MouseEvent e) { 	
-				pcenterPanel.addPoint(e.getX(), e.getY());
-				pcenterPanel.setPenSize(penSize.getValue());
-				pcenterPanel.setColor(MyMouseAdapter.this.currentColor);
-				pcenterPanel.repaint();
+
+	    public int getPenSize() {
+	    	return this.penSize.getValue();
 	    }
 	    
 	    public void show(){
