@@ -2,17 +2,10 @@ package content;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Dictionary;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Hashtable;
-import java.util.Map;
-import java.util.Random;
 import java.util.Set;
-
 import javax.swing.*;
 import javax.swing.border.*;
-import javax.swing.event.MouseInputAdapter;
 
 public class guiHandler extends MouseAdapter{
 	    private static final int MIN_PEN_SIZE = 1;
@@ -34,7 +27,7 @@ public class guiHandler extends MouseAdapter{
 	    	this.penSize = new JSlider(JSlider.HORIZONTAL, MIN_PEN_SIZE, MAX_PEN_SIZE, STARTING_PEN_SIZE); 
 	    	this.pcenterPanel = new DrawPanel();
 	    	this.bColors = new HashSet<>();
-	    	
+	    	this.pEast = new JPanel();
 	    	this.myListener = new MyMouseListener(this);
 	    	
 	    	this.bDelete = new JButton("Erase everything");
@@ -45,18 +38,19 @@ public class guiHandler extends MouseAdapter{
 				}
 			});
 	    	
-	    	this.selectColorText = new JLabel("Select color");
-	    	this.bColors.add(new ColorButton("RED", Color.RED, this));
-	    	this.bColors.add(new ColorButton("GREEN", Color.GREEN, this));
-	    	this.bColors.add(new ColorButton("DARK_GRAY", Color.DARK_GRAY, this));
-	    	this.bColors.add(new ColorButton("YELLOW", Color.YELLOW, this));
-	    	this.bColors.add(new ColorButton("BLACK", Color.BLACK, this));
-	    	this.pEast = new JPanel();
-	    	this.pEast.setLayout(new BoxLayout(this.pEast, BoxLayout.Y_AXIS));
+	    	this.selectColorText = new JLabel("Select color");	
+	    	this.pEast.setLayout(new BoxLayout(this.pEast, BoxLayout.Y_AXIS) );
 	    	this.pEast.setBackground(Color.WHITE);
 	    	this.pEast.setBorder(new TitledBorder("Change settings here"));
-	    	this.setPenSizeJSlider();	
-	    	this.setPanel();
+	    	this.setPenSizeJSlider();
+	    	this.getpCenterPanel().setBorder(new TitledBorder("Draw something here.."));
+	    	this.setCenterPanelListeners();
+	    	this.buildSettingsPanel();
+			this.setFrameView();	
+		}
+	    
+	    private void buildSettingsPanel() {
+	    	this.addColorButtons();
 	    	this.addVerticalSpacing(this.pEast, 25);
 	    	this.pEast.add(this.penSizeText);
 			this.addVerticalSpacing(this.pEast, 10);
@@ -68,12 +62,19 @@ public class guiHandler extends MouseAdapter{
 			for(ColorButton b : this.bColors) {
 				this.pEast.add(b);
 				this.addVerticalSpacing(this.pEast, 5);
-			}		
+			}	
+			
 			this.addVerticalSpacing(this.pEast, 10);
 			this.pEast.add(this.bDelete);
-			
-			this.setFrameView();	
-		}
+	    }
+	    
+	    private void addColorButtons() {
+	    	this.bColors.add(new ColorButton("RED", Color.RED, this));
+	    	this.bColors.add(new ColorButton("GREEN", Color.GREEN, this));
+	    	this.bColors.add(new ColorButton("DARK_GRAY", Color.DARK_GRAY, this));
+	    	this.bColors.add(new ColorButton("YELLOW", Color.YELLOW, this));
+	    	this.bColors.add(new ColorButton("BLACK", Color.BLACK, this));
+	    }
 	    
 	    private void addVerticalSpacing(JPanel target, int Yspacing) {
 	    	target.add(Box.createVerticalStrut(Yspacing));
@@ -85,8 +86,7 @@ public class guiHandler extends MouseAdapter{
 	    		
 		}
 
-		private void setPanel() {
-	    	this.getpCenterPanel().setBorder(new TitledBorder("Draw something here.."));
+		private void setCenterPanelListeners() { 	
 	    	this.getpCenterPanel().addMouseListener(this.myListener);
 	    	this.getpCenterPanel().addMouseMotionListener(this.myListener);
 	    }

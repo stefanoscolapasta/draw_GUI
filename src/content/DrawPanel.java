@@ -1,7 +1,6 @@
 package content;
 
 import java.awt.*;
-import java.awt.event.MouseEvent;
 
 import javax.swing.*;
 import java.util.*;
@@ -53,7 +52,6 @@ public class DrawPanel extends JPanel {
 		this.lines.add(this.circles);
 	}
 	
-	// Metodo per aggiungere nuovi cerchi
 	public void addPoint(int x, int y){
 		int lastSize = 1;
 		Color c1 = Color.BLACK;
