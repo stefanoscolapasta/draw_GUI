@@ -21,6 +21,14 @@ public class Line {
 		return this.points;
 	}
 	
+	public int getLineSize() {
+		int size = DrawPanel.DEFALUT_SIZE;
+		for(ColoredSizedPoint p : this.points) {
+			size = p.getPointSize();
+		}
+		return size;
+	}
+	
 	public Set<Point> getPoints(){
 		Set<Point> pointsCoordinates = new HashSet<>();
 		for(ColoredSizedPoint p : this.points) {

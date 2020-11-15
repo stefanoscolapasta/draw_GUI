@@ -56,12 +56,13 @@ public class MyMouseListener implements MouseListener, MouseMotionListener{
 	@Override
 	public void mousePressed(MouseEvent arg0) {
 		try {
-			Line lineToTraslate = this.gui.getpCenterPanel().getLineAtCoordinates(new Point(arg0.getX(), arg0.getY()));
+			Line lineToTraslate = this.gui.getpCenterPanel().getLineAtCoordinates(new Point((int)arg0.getX(), (int)arg0.getY()));
+			System.out.print(lineToTraslate.toString());
 			this.gui.getpCenterPanel().traslateLine(lineToTraslate, new Point(250, 250));
 			this.gui.getpCenterPanel().repaint();
 			
 		}catch(NoSuchElementException exc){
-			System.out.println(exc.getMessage());
+			System.out.println("Didn't find a line here");
 		}
 		
 	}

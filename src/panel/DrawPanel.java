@@ -8,7 +8,7 @@ import java.util.*;
 // Specializzazione ad-hoc per un JPanel
 public class DrawPanel extends JPanel {
 	private static final Color DEFALUT_COLOR = Color.BLACK;
-	private static final int DEFALUT_SIZE = 1;
+	static final int DEFALUT_SIZE = 1;
 	private static final long serialVersionUID = 7114066347061701832L;
 	private LinesSet linesSet; 
 	private Line line;
@@ -67,9 +67,14 @@ public class DrawPanel extends JPanel {
 	
 	public Line getLineAtCoordinates(Point p) throws NoSuchElementException{
 		for(Line l : this.linesSet.getLines()) {
-			if(l.getPoints().contains(p)) {
-				return l;
+			for(int i = (-l.getLineSize()); i <= l.getLineSize(); i++) {
+				for(int j = (-l.getLineSize()); j <= l.getLineSize(); j++) {
+					if(l.getPoints().contains(new Point((int)(p.getX()+i), (int)(p.getY()+j)))) {
+						return l;
+					}
+				}
 			}
+			
 		}
 		throw new NoSuchElementException();	
 	}
