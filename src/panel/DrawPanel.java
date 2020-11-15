@@ -1,11 +1,7 @@
 package panel;
 
 import java.awt.*;
-
 import javax.swing.*;
-
-import content.Pair;
-
 import java.util.*;
 
 // Specializzazione ad-hoc per un JPanel
@@ -81,7 +77,7 @@ public class DrawPanel extends JPanel {
 		throw new NoSuchElementException();
 	}
 	
-	public void changeColor(Line l, Color c) throws NoSuchElementException{	
+	public void changeLinesColor(Line l, Color c) throws NoSuchElementException{	
 		if(l != null) {
 			for (ColoredSizedPoint p : l.getColoredSizedPoint()) {
 				p.setPointColor(c);
