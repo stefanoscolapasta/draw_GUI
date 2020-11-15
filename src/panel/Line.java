@@ -1,5 +1,6 @@
 package panel;
 
+import java.awt.Point;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,7 +15,15 @@ public class Line {
 		this.points.add(p);
 	}
 	
-	public Set<ColoredSizedPoint> getPoints(){
+	public Set<ColoredSizedPoint> getColoredSizedPoint(){
 		return this.points;
+	}
+	
+	public Set<Point> getPoints(){
+		Set<Point> pointsCoordinates = new HashSet<>();
+		for(ColoredSizedPoint p : this.points) {
+			pointsCoordinates.add(p.getPointCoordinates());
+		}
+		return pointsCoordinates;
 	}
 }

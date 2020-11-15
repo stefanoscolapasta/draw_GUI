@@ -22,6 +22,11 @@ public class ColoredSizedPoint {
 		this.color = c;
 	}
 	
+	public void traslate(Point p) {
+		this.coordinates.x += p.x;
+		this.coordinates.y += p.y;
+	}
+	
 	public void setPointSize(final int newSize) {
 		this.size = newSize;
 	}

@@ -24,7 +24,7 @@ public class DrawPanel extends JPanel {
 		super.paintComponent(g);
 		
 		for (Line e : this.linesSet.getLines()) {
-			for(ColoredSizedPoint c : e.getPoints()) {
+			for(ColoredSizedPoint c : e.getColoredSizedPoint()) {
 				g.setColor(c.getPointColor());
 				g.fillOval(c.getPointCoordinates().x, c.getPointCoordinates().y, c.getPointSize(), c.getPointSize());
 			}
@@ -33,17 +33,35 @@ public class DrawPanel extends JPanel {
 	
 	public void deleteEverything() {
 		this.linesSet.empty();
+		this.line = new Line();
+		this.linesSet = new LinesSet();
+		this.linesSet.addLine(this.line);
 	}
 	
 	public void setPenSize(final int size) {	
-		for(ColoredSizedPoint c : this.line.getPoints()) {
+		for(ColoredSizedPoint c : this.line.getColoredSizedPoint()) {
 			c.setPointSize(size);
 		}
 	}
 	
 	public void setColor(final Color color) {
-		for(ColoredSizedPoint c : this.line.getPoints()) {
+		for(ColoredSizedPoint c : this.line.getColoredSizedPoint()) {
 			c.setPointColor(color);
+		}
+	}
+	
+	public Line getLineAtCoordinates(Point p) throws NoSuchElementException{
+		for(Line l : this.linesSet.getLines()) {
+			if(l.getPoints().contains(p)) {
+				return l;
+			}
+		}
+		throw new NoSuchElementException();	
+	}
+	
+	public void traslateLine(Line l, Point coordinatesToTranslate){
+		for(ColoredSizedPoint p : l.getColoredSizedPoint()) {
+			p.traslate(coordinatesToTranslate);
 		}
 	}
 	
@@ -56,7 +74,7 @@ public class DrawPanel extends JPanel {
 	public void addPoint(final int x, final int y){
 		int lastSize = DEFALUT_SIZE;
 		Color c1 = DEFALUT_COLOR;	
-		for(ColoredSizedPoint c : this.line.getPoints()) {
+		for(ColoredSizedPoint c : this.line.getColoredSizedPoint()) {
 			lastSize = c.getPointSize();
 			c1 = c.getPointColor();
 		}

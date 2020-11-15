@@ -1,8 +1,12 @@
 package content;
 
+import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.NoSuchElementException;
+
+import panel.Line;
 
 public class MyMouseListener implements MouseListener, MouseMotionListener{
 
@@ -31,8 +35,9 @@ public class MyMouseListener implements MouseListener, MouseMotionListener{
 	}
 
 	@Override
-	public void mouseClicked(MouseEvent arg0) {
-		// TODO Auto-generated method stub
+	public void mouseClicked(MouseEvent e) {
+		
+		
 		
 	}
 
@@ -50,7 +55,14 @@ public class MyMouseListener implements MouseListener, MouseMotionListener{
 
 	@Override
 	public void mousePressed(MouseEvent arg0) {
-		// TODO Auto-generated method stub
+		try {
+			Line lineToTraslate = this.gui.getpCenterPanel().getLineAtCoordinates(new Point(arg0.getX(), arg0.getY()));
+			this.gui.getpCenterPanel().traslateLine(lineToTraslate, new Point(250, 250));
+			this.gui.getpCenterPanel().repaint();
+			
+		}catch(NoSuchElementException exc){
+			System.out.println(exc.getMessage());
+		}
 		
 	}
 
