@@ -6,9 +6,9 @@ import java.awt.event.MouseMotionListener;
 
 public class MyMouseListener implements MouseListener, MouseMotionListener{
 
-	private final guiHandler gui;
+	private final GuiHandler gui;
 	
-	public MyMouseListener(guiHandler gui) {
+	public MyMouseListener(GuiHandler gui) {
 		this.gui = gui;
 	}
 	

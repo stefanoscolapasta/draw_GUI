@@ -13,7 +13,7 @@ public class ColorButton extends JButton {
 	private boolean isColored;
 	private int clickCount;
 	
-	public ColorButton(String name, Color c, guiHandler m) {
+	public ColorButton(String name, Color c, GuiHandler m) {
 		super(name);
 		this.c = c;
 		this.isColored = false;

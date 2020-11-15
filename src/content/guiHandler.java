@@ -7,7 +7,7 @@ import java.util.Set;
 import javax.swing.*;
 import javax.swing.border.*;
 
-public class guiHandler extends MouseAdapter{
+public class GuiHandler extends MouseAdapter{
 	    private static final int MIN_PEN_SIZE = 1;
 	    private static final int MAX_PEN_SIZE = 30;
 	    private static final int STARTING_PEN_SIZE = 30;
@@ -22,7 +22,7 @@ public class guiHandler extends MouseAdapter{
 	    private Color currentColor = Color.BLACK;
 	    private final MyMouseListener myListener;
 	    
-	    public guiHandler() {
+	    public GuiHandler() {
 	    	this.frame = new MyFrame("Canvas Example",new BorderLayout());
 	    	this.penSize = new JSlider(JSlider.HORIZONTAL, MIN_PEN_SIZE, MAX_PEN_SIZE, STARTING_PEN_SIZE); 
 	    	this.pcenterPanel = new DrawPanel();
@@ -33,8 +33,8 @@ public class guiHandler extends MouseAdapter{
 	    	this.bDelete = new JButton("Erase everything");
 	    	this.bDelete.addActionListener(new ActionListener() {		
 				public void actionPerformed(ActionEvent arg0) {
-					guiHandler.this.getpCenterPanel().deleteEverything();	
-					guiHandler.this.getpCenterPanel().repaint();
+					GuiHandler.this.getpCenterPanel().deleteEverything();	
+					GuiHandler.this.getpCenterPanel().repaint();
 				}
 			});
 	    	

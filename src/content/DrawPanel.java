@@ -7,64 +7,65 @@ import java.util.*;
 
 // Specializzazione ad-hoc per un JPanel
 public class DrawPanel extends JPanel {
-
+	private static final Color DEFALUT_COLOR = Color.BLACK;
+	private static final int DEFALUT_SIZE = 1;
 	private static final long serialVersionUID = 7114066347061701832L;
-	private Set<Map<Point, Pair<Color, Integer>>> lines; 
-	private Map<Point, Pair<Color, Integer>> circles;
+	private LinesSet linesSet; 
+	private Line line;
 	
 	public DrawPanel() {
-		this.circles = new HashMap<>();
-		this.lines = new HashSet<>(); 
-		this.lines.add(this.circles);
+		this.line = new Line();
+		this.linesSet = new LinesSet(); 
+		this.linesSet.addLine(this.line);
 	}
 
 	// override del metodo di disegno  
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		
-		for (Map<Point, Pair<Color, Integer>> e : this.lines) {
-			for(Map.Entry<Point, Pair<Color, Integer>> c : e.entrySet()) {
-				g.setColor(c.getValue().first);
-				g.fillOval(c.getKey().x, c.getKey().y, c.getValue().second, c.getValue().second);
+		for (Line e : this.linesSet.getLines()) {
+			for(ColoredSizedPoint c : e.getPoints()) {
+				g.setColor(c.getPointColor());
+				g.fillOval(c.getPointCoordinates().x, c.getPointCoordinates().y, c.getPointSize(), c.getPointSize());
 			}
 		}
 	}
 	
 	public void deleteEverything() {
-		this.lines = new HashSet<>();
+		this.linesSet.empty();
 	}
 	
-	public void setPenSize(int size) {	
-		for(Pair<Color, Integer> lastLine : this.circles.values()) {
-			lastLine.second = size;
+	public void setPenSize(final int size) {	
+		for(ColoredSizedPoint c : this.line.getPoints()) {
+			c.setPointSize(size);
 		}
 	}
 	
-	public void setColor(Color c) {
-		for(Pair<Color, Integer> pair : this.circles.values()) {
-			pair.first = c;
+	public void setColor(final Color color) {
+		for(ColoredSizedPoint c : this.line.getPoints()) {
+			c.setPointColor(color);
 		}
 	}
 	
 	public void createLineObj() {
-		this.lines.add(this.circles);
-		this.circles = new HashMap<>();
-		this.lines.add(this.circles);
+		this.linesSet.addLine(this.line);
+		this.line = new Line();
+		this.linesSet.addLine(this.line);
 	}
 	
-	public void addPoint(int x, int y){
-		int lastSize = 1;
-		Color c1 = Color.BLACK;
-		for(Pair<Color, Integer> c : this.circles.values()) {
-			lastSize = c.second;
-			c1 = c.first;
+	public void addPoint(final int x, final int y){
+		int lastSize = DEFALUT_SIZE;
+		Color c1 = DEFALUT_COLOR;	
+		for(ColoredSizedPoint c : this.line.getPoints()) {
+			lastSize = c.getPointSize();
+			c1 = c.getPointColor();
 		}
 		
-		if(lastSize < 1) {
-			lastSize = 1;
+		if(lastSize < DEFALUT_SIZE) {
+			lastSize = DEFALUT_SIZE;
 		}
 		
-		this.circles.put(new Point(x-(lastSize/2), y-(lastSize)/2), new Pair<Color, Integer>(c1, lastSize));
+		this.line.addPoint(new ColoredSizedPoint(new Point(x-(lastSize/2), y-(lastSize/2)), c1, lastSize));
 	}
 	
 }
