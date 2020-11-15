@@ -24,11 +24,12 @@
 - [ ] ...
 
 ## Author
+* Main Author
+   * [Stefano Scolari](https://www.linkedin.com/in/stefano-scolari-7a9440170/)<br/>
 
-* [Stefano Scolari](https://www.linkedin.com/in/stefano-scolari-7a9440170/)<br/>
-   * Contributors<br/>
-      * [Tommaso Patriti](https://github.com/Ro0t-set)<br/>
-      * [Alessandro Mazzoli](https://github.com/alemazzo)
+* Contributors<br/>
+   * [Tommaso Patriti](https://github.com/Ro0t-set)<br/>
+   * [Alessandro Mazzoli](https://github.com/alemazzo)
 
 ## License
 
