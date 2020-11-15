@@ -1,4 +1,6 @@
-package content;
+package main;
+
+import content.GuiHandler;
 
 public class UseGUI {
 	public static void main(String[] args){
