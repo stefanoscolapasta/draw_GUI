@@ -1,6 +1,6 @@
 # draw_GUI <br/>
 ## ABOUT
-**A simple drawing GUI** inspired by [paint](https://it.wikipedia.org/wiki/Paint) but trying to make it better<br/><br/> 
+**A simple drawing GUI** inspired by [paint](https://it.wikipedia.org/wiki/Paint) but trying to make it better.<br/><br/> 
 
 ### USAGE
 
@@ -14,7 +14,7 @@
         * Select a color
         * Press on the line which color you want to change
         * Color is now changed
-    * All the rest is **WIP**<br/><br/>
+    * All the rest is **WIP**<br/>
     
 ## <br/>TODO
 - [ ] Add more tools
