@@ -12,6 +12,7 @@ import java.util.*;
 public class DrawPanel extends JPanel {
 	private static final Color DEFALUT_COLOR = Color.BLACK;
 	static final int DEFALUT_SIZE = 1;
+	private static final int MAX_DISTANCE = 999999;
 	private static final long serialVersionUID = 7114066347061701832L;
 	private LinesSet linesSet;
 	private Line line;
@@ -80,25 +81,27 @@ public class DrawPanel extends JPanel {
 	}
 
 	public void traslateLine(Line l, Point coordinatesToTranslate) {
-		Pair<Point, Integer> vector = this.findClosestPoint(l, coordinatesToTranslate);
+		Point closestPoint = this.findClosestPoint(l, coordinatesToTranslate);
+		int xTrasl = (int)(coordinatesToTranslate.getX() - closestPoint.getX());
+		int yTrasl = (int)(coordinatesToTranslate.getY() - closestPoint.getY());
+		Point vector = new Point(xTrasl, yTrasl);
+		
 		for (ColoredSizedPoint p : l.getColoredSizedPoint()) {
-			
-			p.traslate(new Point((int)(p.getPointCoordinates().getX() + vector.first.getX()), (int)(p.getPointCoordinates().getY() + vector.first.getY())));
+			p.traslate(vector);
 		}
 	}
 
-	private Pair<Point, Integer> findClosestPoint(Line l, Point a) {
+	private Point findClosestPoint(final Line l,final Point a) {
 		Point closest = new Point();
-		int minDis = 99999;
+		int minDis = MAX_DISTANCE;
 		for (Point p : l.getPoints()) {
-			int dis = (int)(Math.pow((p.getX() - a.getX()), 2) + Math.pow((p.getY() - a.getY()), 2));
-			if ( dis < minDis) {
-				minDis = dis;
+			int actualDis = (int)(Math.pow((p.getX() - a.getX()), 2) + Math.pow((p.getY() - a.getY()), 2));
+			if ( actualDis < minDis) {
+				minDis = actualDis;
 				closest = p;
 			}
 		}
-		System.out.println(" " + closest + minDis);
-		return new Pair<>(closest, minDis);
+		return closest;
 	}
 
 	public void createLineObj() {

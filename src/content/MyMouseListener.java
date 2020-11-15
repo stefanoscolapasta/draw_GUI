@@ -72,6 +72,7 @@ public class MyMouseListener implements MouseListener, MouseMotionListener{
 		}
 	}
 	
+	
 	private void resetClickCount() {
 		this.clickCount = 0;
 	}

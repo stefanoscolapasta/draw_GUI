@@ -23,8 +23,8 @@ public class ColoredSizedPoint {
 	}
 	
 	public void traslate(Point p) {
-		this.coordinates.x += p.x;
-		this.coordinates.y += p.y;
+		this.coordinates.x += p.getX();
+		this.coordinates.y += p.getY();
 	}
 	
 	public void setPointSize(final int newSize) {
