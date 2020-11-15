@@ -11,12 +11,14 @@ import panel.Line;
 public class MyMouseListener implements MouseListener, MouseMotionListener{
 
 	private final GuiHandler gui;
-	
+	private int clickCount = 0;
+	private Line lineToTraslate;
 	public MyMouseListener(GuiHandler gui) {
 		this.gui = gui;
 	}
 	
 	public void mouseDragged(MouseEvent e) { 	
+		this.resetClickCount();
     	this.gui.getpCenterPanel().addPoint(e.getX(), e.getY());
     	this.gui.getpCenterPanel().setPenSize(this.gui.getPenSize());
     	this.gui.getpCenterPanel().setColor(this.gui.getCurrentColor());
@@ -54,19 +56,29 @@ public class MyMouseListener implements MouseListener, MouseMotionListener{
 	}
 
 	@Override
-	public void mousePressed(MouseEvent arg0) {
-		try {
-			Line lineToTraslate = this.gui.getpCenterPanel().getLineAtCoordinates(new Point((int)arg0.getX(), (int)arg0.getY()));
-			System.out.print(lineToTraslate.toString());
-			this.gui.getpCenterPanel().traslateLine(lineToTraslate, new Point(250, 250));
+	public void mousePressed(MouseEvent e) {
+		if(e.getButton() == MouseEvent.BUTTON3 && this.clickCount < 1) {
+			try {
+				this.lineToTraslate = this.gui.getpCenterPanel().getLineAtCoordinates(new Point((int)e.getX(), (int)e.getY()));
+				System.out.print(lineToTraslate.toString() + this.clickCount);	
+				this.increaseClickCount();
+			}catch(NoSuchElementException exc){
+				System.out.println("Didn't find a line here");
+			}
+		}else if(e.getButton() == MouseEvent.BUTTON3 && this.clickCount >= 1) {
+			this.gui.getpCenterPanel().traslateLine(this.lineToTraslate, new Point(e.getX(), e.getY()));
 			this.gui.getpCenterPanel().repaint();
-			
-		}catch(NoSuchElementException exc){
-			System.out.println("Didn't find a line here");
+			this.resetClickCount();
 		}
-		
 	}
-
+	
+	private void resetClickCount() {
+		this.clickCount = 0;
+	}
+	
+	private void increaseClickCount() {
+		this.clickCount++;
+	}
 	
 
 }
