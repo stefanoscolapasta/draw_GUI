@@ -1,2 +1,37 @@
-# draw_GUI
-A simple drawing tool
+# draw_GUI <br/>
+## ABOUT
+**A simple drawing GUI** inspired by [paint](https://it.wikipedia.org/wiki/Paint) but trying to make it better<br/><br/> 
+
+### USAGE
+
+* Until now **you are able** to:
+    * Draw with the pen
+    * Change the pen size
+    * Change color
+    * Clear the canvas
+    * Select a line with the RMB, move it around and re-place it always with RMB
+    * Change a line's color :
+        * Select a color
+        * Press on the line which color you want to change
+        * Color is now changed
+    * All the rest is **WIP**<br/><br/>
+    
+## <br/>TODO
+- [ ] Add more tools
+- [ ] Improve UX and UI
+- [ ] Add multiple panels
+- [ ] Introduce the image import options
+- [ ] ...
+
+## Author
+
+* [Stefano Scolari](https://www.linkedin.com/in/stefano-scolari-7a9440170/)
+
+## License
+
+[![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](http://badges.mit-license.org)
+
+- **[MIT license](http://opensource.org/licenses/mit-license.php)**
+- Copyright 2020 © <a href="http://fvcproductions.com" target="_blank">FVCproductions</a>.
+
+<br/><br/> 
