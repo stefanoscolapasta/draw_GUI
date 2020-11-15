@@ -20,13 +20,28 @@ public class DrawPanel extends JPanel {
 	}
 
 	// override del metodo di disegno  
-	public void paintComponent(Graphics g) {
+	public void paint(Graphics g) {
 		super.paintComponent(g);
 		
 		for (Line e : this.linesSet.getLines()) {
+			ColoredSizedPoint last = null;
 			for(ColoredSizedPoint c : e.getColoredSizedPoint()) {
-				g.setColor(c.getPointColor());
-				g.fillOval(c.getPointCoordinates().x, c.getPointCoordinates().y, c.getPointSize(), c.getPointSize());
+				if(last != null) {
+					Graphics2D g2d = (Graphics2D) g;
+					g2d.setColor(last.getPointColor());
+					g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+					g2d.setStroke(new BasicStroke(c.getPointSize(), BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
+					g2d.drawLine(
+									(int)last.getPointCoordinates().getX() + (c.getPointSize()/2),
+									(int)last.getPointCoordinates().getY() + (c.getPointSize()/2),
+									(int)c.getPointCoordinates().getX() + (c.getPointSize()/2),
+									(int)c.getPointCoordinates().getY() + (c.getPointSize()/2)
+								);
+					
+//					g.setColor(c.getPointColor());
+//					g.fillOval(c.getPointCoordinates().x, c.getPointCoordinates().y, c.getPointSize(), c.getPointSize());
+				}
+				last = new ColoredSizedPoint(c.getPointCoordinates(), c.getPointColor(), c.getPointSize());
 			}
 		}
 	}

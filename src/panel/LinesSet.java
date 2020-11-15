@@ -1,16 +1,16 @@
 package panel;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LinesSet {
-	private final Set<Line> linesSet;
+	private final List<Line> linesSet;
 	
 	public LinesSet() {
-		this.linesSet = new HashSet<>();
+		this.linesSet = new ArrayList<>();
 	}
 	
-	public Set<Line> getLines(){
+	public List<Line> getLines(){
 		return this.linesSet;
 	}
 	

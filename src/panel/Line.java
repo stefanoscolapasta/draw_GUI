@@ -1,21 +1,23 @@
 package panel;
 
+import java.util.List;
 import java.awt.Point;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
 public class Line {
-	final private Set<ColoredSizedPoint> points;
+	final private List<ColoredSizedPoint> points;
 	
 	public Line() {
-		this.points = new HashSet<>();
+		this.points = new ArrayList<>();
 	}
 	
 	public void addPoint(ColoredSizedPoint p) {
 		this.points.add(p);
 	}
 	
-	public Set<ColoredSizedPoint> getColoredSizedPoint(){
+	public List<ColoredSizedPoint> getColoredSizedPoint(){
 		return this.points;
 	}
 	
