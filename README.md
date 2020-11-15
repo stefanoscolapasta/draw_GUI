@@ -11,9 +11,11 @@
     * Clear the canvas
     * Select a line with the RMB, move it around and re-place it always with RMB
     * Change a line's color :
-        * Select a color
-        * Press on the line which color you want to change
-        * Color is now changed
+        * **HOW TO:**
+            * Select a color
+            * Press on the line which color you want to change
+            * Color is now changed
+        
     * All the rest is **WIP**<br/>
     
 ## <br/>TODO
