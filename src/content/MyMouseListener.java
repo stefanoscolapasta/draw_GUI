@@ -1,6 +1,5 @@
 package content;
 
-import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -81,10 +80,6 @@ public class MyMouseListener implements MouseListener, MouseMotionListener{
 		}else if(e.getButton() == MouseEvent.BUTTON2 && this.gotLineToColor) {
 			this.gotLineToColor = false;
 		}
-	}
-
-	public Line getLineToColor() {
-		return lineToColor;
 	}
 
 	public void setLineToTraslate(Line lineToTraslate) {
