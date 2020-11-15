@@ -7,6 +7,8 @@ import java.util.Set;
 import javax.swing.*;
 import javax.swing.border.*;
 
+import panel.DrawPanel;
+
 public class GuiHandler extends MouseAdapter{
 	    private static final int MIN_PEN_SIZE = 1;
 	    private static final int MAX_PEN_SIZE = 30;
