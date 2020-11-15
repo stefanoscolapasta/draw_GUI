@@ -23,6 +23,7 @@
 - [ ] Improve UX and UI
 - [ ] Add multiple panels
 - [ ] Introduce the image import options
+- [ ] Add eraser
 - [ ] ...
 
 ## Author
