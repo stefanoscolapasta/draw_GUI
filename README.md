@@ -25,8 +25,8 @@
 
 ## Author
 
-* [Stefano Scolari](https://www.linkedin.com/in/stefano-scolari-7a9440170/)
-   *Contributor [Tommaso Patriti](https://github.com/Ro0t-set)
+* [Stefano Scolari](https://www.linkedin.com/in/stefano-scolari-7a9440170/)<br/>
+   * Contributor [Tommaso Patriti](https://github.com/Ro0t-set)
 
 ## License
 
