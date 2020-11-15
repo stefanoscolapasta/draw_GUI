@@ -1,5 +1,6 @@
 package content;
 
+import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -12,7 +13,9 @@ public class MyMouseListener implements MouseListener, MouseMotionListener{
 
 	private final GuiHandler gui;
 	private Line lineToTraslate;
-	private boolean gotObject = false;
+	private Line lineToColor;
+	private boolean gotLineToMove = false;
+	private boolean gotLineToColor = false;
 	public MyMouseListener(GuiHandler gui) {
 		this.gui = gui;
 	}
@@ -31,7 +34,7 @@ public class MyMouseListener implements MouseListener, MouseMotionListener{
 	
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		if(this.gotObject) {
+		if(this.gotLineToMove) {
 			this.gui.getpCenterPanel().traslateLine(this.lineToTraslate, new Point(e.getX(), e.getY()));
 			this.gui.getpCenterPanel().repaint();
 		}
@@ -40,38 +43,53 @@ public class MyMouseListener implements MouseListener, MouseMotionListener{
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-
-		
+	
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		if(e.getButton() == MouseEvent.BUTTON3 && !this.gotObject) {
+		if(e.getButton() == MouseEvent.BUTTON3 && !this.gotLineToMove) {
 			try {
 				this.lineToTraslate = this.gui.getpCenterPanel().getLineAtCoordinates(new Point((int)e.getX(), (int)e.getY()));
-				System.out.println(lineToTraslate.toString() + this.gotObject);	
-				this.gotObject = true;
+				System.out.println(lineToTraslate.toString() + this.gotLineToMove);	
+				this.gotLineToMove = true;
 			}catch(NoSuchElementException exc){
 				System.out.println("Didn't find a line here");
 			}
-		}else if(e.getButton() == MouseEvent.BUTTON3 && this.gotObject) {
-			//this.gui.getpCenterPanel().traslateLine(this.lineToTraslate, new Point(e.getX(), e.getY()));
-			this.gui.getpCenterPanel().repaint();
-			this.gotObject = false;
+		}else if(e.getButton() == MouseEvent.BUTTON3 && this.gotLineToMove) {				
+				this.gotLineToMove = false; //I dropped the object		
+		}else if(e.getButton() == MouseEvent.BUTTON2 && !this.gotLineToColor) {
+			try {
+				this.lineToColor = this.gui.getpCenterPanel().getLineAtCoordinates(new Point((int)e.getX(), (int)e.getY()));
+				this.gotLineToColor = true;
+				this.gui.getpCenterPanel().changeColor(this.lineToColor, this.gui.getCurrentColor());
+				System.out.println(this.lineToColor.toString());
+			}catch(NoSuchElementException exc){
+				System.out.println("Didn't find a line here");
+				this.gotLineToColor = false;
+			}		
+		}else if(e.getButton() == MouseEvent.BUTTON2 && this.gotLineToColor) {
+			this.gotLineToColor = false;
 		}
 	}
 
+	public Line getLineToColor() {
+		return lineToColor;
+	}
+
+	public void setLineToTraslate(Line lineToTraslate) {
+		this.lineToTraslate = lineToTraslate;
+	}
+	
 
 }

@@ -3,6 +3,7 @@ package content;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.HashSet;
+import java.util.NoSuchElementException;
 import java.util.Set;
 import javax.swing.*;
 import javax.swing.border.*;
