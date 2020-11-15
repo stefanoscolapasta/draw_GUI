@@ -1,5 +1,6 @@
 package content;
 
+import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -59,14 +60,16 @@ public class MyMouseListener implements MouseListener, MouseMotionListener{
 	public void mousePressed(MouseEvent e) {
 		if(e.getButton() == MouseEvent.BUTTON3 && this.clickCount < 1) {
 			try {
-				this.lineToTraslate = this.gui.getpCenterPanel().getLineAtCoordinates(new Point((int)e.getX(), (int)e.getY()));
-				System.out.print(lineToTraslate.toString() + this.clickCount);	
+				this.setLineToTraslate(this.gui.getpCenterPanel().getLineAtCoordinates(new Point((int)e.getX(), (int)e.getY())));
+				System.out.print(getLineToTraslate().toString() + this.clickCount);
+				
+				//this.gui.getpCenterPanel().changeColor(this.lineToTraslate, Color.MAGENTA);
 				this.increaseClickCount();
 			}catch(NoSuchElementException exc){
 				System.out.println("Didn't find a line here");
 			}
 		}else if(e.getButton() == MouseEvent.BUTTON3 && this.clickCount >= 1) {
-			this.gui.getpCenterPanel().traslateLine(this.lineToTraslate, new Point(e.getX(), e.getY()));
+			this.gui.getpCenterPanel().traslateLine(this.getLineToTraslate(), new Point(e.getX(), e.getY()));
 			this.gui.getpCenterPanel().repaint();
 			this.resetClickCount();
 		}
@@ -79,6 +82,14 @@ public class MyMouseListener implements MouseListener, MouseMotionListener{
 	
 	private void increaseClickCount() {
 		this.clickCount++;
+	}
+
+	public Line getLineToTraslate() {
+		return lineToTraslate;
+	}
+
+	public void setLineToTraslate(Line lineToTraslate) {
+		this.lineToTraslate = lineToTraslate;
 	}
 	
 

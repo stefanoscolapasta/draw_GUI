@@ -79,6 +79,14 @@ public class DrawPanel extends JPanel {
 		}
 		throw new NoSuchElementException();
 	}
+	
+	public void changeColor(Line l, Color c) {
+		
+		for (ColoredSizedPoint p : l.getColoredSizedPoint()) {
+			p.setPointColor(c);
+			
+		}
+	}
 
 	public void traslateLine(Line l, Point coordinatesToTranslate) {
 		Point closestPoint = this.findClosestPoint(l, coordinatesToTranslate);

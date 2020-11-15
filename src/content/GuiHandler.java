@@ -105,6 +105,7 @@ public class GuiHandler extends MouseAdapter{
 	    
 	    public void changeCurrentColor(Color c) {
 	    	this.currentColor = c;
+	    	this.pcenterPanel.changeColor(myListener.getLineToTraslate() , c);
 	    }
 	    
 	    public Color getCurrentColor() {
