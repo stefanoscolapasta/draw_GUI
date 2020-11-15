@@ -12,7 +12,7 @@ import panel.DrawPanel;
 public class GuiHandler extends MouseAdapter{
 	    private static final int MIN_PEN_SIZE = 1;
 	    private static final int MAX_PEN_SIZE = 30;
-	    private static final int STARTING_PEN_SIZE = 30;
+	    private static final int STARTING_PEN_SIZE = 15;
 		private final DrawPanel pcenterPanel;
 	    private final JSlider penSize;
 	    private JLabel penSizeText;

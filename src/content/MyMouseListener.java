@@ -11,14 +11,13 @@ import panel.Line;
 public class MyMouseListener implements MouseListener, MouseMotionListener{
 
 	private final GuiHandler gui;
-	private int clickCount = 0;
 	private Line lineToTraslate;
+	private boolean gotObject = false;
 	public MyMouseListener(GuiHandler gui) {
 		this.gui = gui;
 	}
 	
 	public void mouseDragged(MouseEvent e) { 	
-		this.resetClickCount();
     	this.gui.getpCenterPanel().addPoint(e.getX(), e.getY());
     	this.gui.getpCenterPanel().setPenSize(this.gui.getPenSize());
     	this.gui.getpCenterPanel().setColor(this.gui.getCurrentColor());
@@ -31,15 +30,17 @@ public class MyMouseListener implements MouseListener, MouseMotionListener{
     }
 	
 	@Override
-	public void mouseMoved(MouseEvent arg0) {
-		// TODO Auto-generated method stub
+	public void mouseMoved(MouseEvent e) {
+		if(this.gotObject) {
+			this.gui.getpCenterPanel().traslateLine(this.lineToTraslate, new Point(e.getX(), e.getY()));
+			this.gui.getpCenterPanel().repaint();
+		}
 		
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		
-		
+
 		
 	}
 
@@ -57,29 +58,20 @@ public class MyMouseListener implements MouseListener, MouseMotionListener{
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		if(e.getButton() == MouseEvent.BUTTON3 && this.clickCount < 1) {
+		if(e.getButton() == MouseEvent.BUTTON3 && !this.gotObject) {
 			try {
 				this.lineToTraslate = this.gui.getpCenterPanel().getLineAtCoordinates(new Point((int)e.getX(), (int)e.getY()));
-				System.out.print(lineToTraslate.toString() + this.clickCount);	
-				this.increaseClickCount();
+				System.out.println(lineToTraslate.toString() + this.gotObject);	
+				this.gotObject = true;
 			}catch(NoSuchElementException exc){
 				System.out.println("Didn't find a line here");
 			}
-		}else if(e.getButton() == MouseEvent.BUTTON3 && this.clickCount >= 1) {
-			this.gui.getpCenterPanel().traslateLine(this.lineToTraslate, new Point(e.getX(), e.getY()));
+		}else if(e.getButton() == MouseEvent.BUTTON3 && this.gotObject) {
+			//this.gui.getpCenterPanel().traslateLine(this.lineToTraslate, new Point(e.getX(), e.getY()));
 			this.gui.getpCenterPanel().repaint();
-			this.resetClickCount();
+			this.gotObject = false;
 		}
 	}
-	
-	
-	private void resetClickCount() {
-		this.clickCount = 0;
-	}
-	
-	private void increaseClickCount() {
-		this.clickCount++;
-	}
-	
+
 
 }
