@@ -1,6 +1,7 @@
 package panel;
 
 import java.util.List;
+import java.awt.Color;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -36,4 +37,14 @@ public class Line {
 		}
 		return pointsCoordinates;
 	}
+	
+	public Color getLineLastColor() {
+		Color lastColor = DrawPanel.DEFALUT_COLOR;
+		for(ColoredSizedPoint p : this.points) {
+			lastColor = p.getPointLastColor();
+		}
+		return lastColor;
+	}
+	
+	
 }

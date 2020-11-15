@@ -10,12 +10,13 @@ import java.util.*;
 
 // Specializzazione ad-hoc per un JPanel
 public class DrawPanel extends JPanel {
-	private static final Color DEFALUT_COLOR = Color.BLACK;
+	static final Color DEFALUT_COLOR = Color.BLACK;
 	static final int DEFALUT_SIZE = 1;
 	private static final int MAX_DISTANCE = 999999;
 	private static final long serialVersionUID = 7114066347061701832L;
 	private LinesSet linesSet;
 	private Line line;
+	private Point vectorForTraslation;
 
 	public DrawPanel() {
 		this.line = new Line();
@@ -68,7 +69,7 @@ public class DrawPanel extends JPanel {
 	}
 
 	public Line getLineAtCoordinates(Point p) throws NoSuchElementException {
-		for (Line l : this.linesSet.getLines()) {
+		for (Line l : this.linesSet.getLines()) { //I control if there is a line that has one of it's point in it's surroundings
 			for (int i = (-l.getLineSize()); i <= l.getLineSize(); i++) {
 				for (int j = (-l.getLineSize()); j <= l.getLineSize(); j++) {
 					if (l.getPoints().contains(new Point((int) (p.getX() + i), (int) (p.getY() + j)))) {
@@ -89,11 +90,17 @@ public class DrawPanel extends JPanel {
 			throw new NoSuchElementException();
 		}
 	}
-
-	public void traslateLine(Line l, Point coordinatesToTranslate) {
-		Point closestPoint = this.findClosestPoint(l, coordinatesToTranslate);
-		int xTrasl = (int)(coordinatesToTranslate.getX() - closestPoint.getX());
-		int yTrasl = (int)(coordinatesToTranslate.getY() - closestPoint.getY());
+	
+	public void resetVector() {
+		this.vectorForTraslation = new Point();
+	}
+	
+	public void traslateLine(Line l, Point coordinatesToTranslate, boolean isTraslating) {
+		if(!isTraslating) { //This way it's not recalculated every time but only the first time the object is selected for tralation
+			this.vectorForTraslation = this.findClosestPoint(l, coordinatesToTranslate);
+		}	
+		int xTrasl = (int)(coordinatesToTranslate.getX() - this.vectorForTraslation.getX());
+		int yTrasl = (int)(coordinatesToTranslate.getY() - this.vectorForTraslation.getY());
 		Point vector = new Point(xTrasl, yTrasl);
 		
 		for (ColoredSizedPoint p : l.getColoredSizedPoint()) {

@@ -7,6 +7,7 @@ public class ColoredSizedPoint {
 	private Point coordinates;
 	private Color color;
 	private int size;
+	private Color lastColor;
 	
 	public ColoredSizedPoint(Point p, Color c, int size) {
 		this.coordinates = p;
@@ -19,6 +20,7 @@ public class ColoredSizedPoint {
 	}
 	
 	public void setPointColor(final Color c) {
+		this.lastColor = this.color;
 		this.color = c;
 	}
 	
@@ -33,6 +35,10 @@ public class ColoredSizedPoint {
 	
 	public int getPointSize() {
 		return this.size;
+	}
+	
+	public Color getPointLastColor() {
+		return this.lastColor;
 	}
 	
 	public Color getPointColor() {

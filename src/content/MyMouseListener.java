@@ -1,5 +1,6 @@
 package content;
 
+import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -15,6 +16,7 @@ public class MyMouseListener implements MouseListener, MouseMotionListener{
 	private Line lineToColor;
 	private boolean gotLineToMove = false;
 	private boolean gotLineToColor = false;
+	private boolean isTraslating = false;
 	public MyMouseListener(GuiHandler gui) {
 		this.gui = gui;
 	}
@@ -34,8 +36,9 @@ public class MyMouseListener implements MouseListener, MouseMotionListener{
 	@Override
 	public void mouseMoved(MouseEvent e) {
 		if(this.gotLineToMove) {
-			this.gui.getpCenterPanel().traslateLine(this.lineToTraslate, new Point(e.getX(), e.getY()));
+			this.gui.getpCenterPanel().traslateLine(this.lineToTraslate, new Point(e.getX(), e.getY()), isTraslating);
 			this.gui.getpCenterPanel().repaint();
+			this.isTraslating = true;
 		}
 		
 	}
@@ -62,11 +65,15 @@ public class MyMouseListener implements MouseListener, MouseMotionListener{
 				this.lineToTraslate = this.gui.getpCenterPanel().getLineAtCoordinates(new Point((int)e.getX(), (int)e.getY()));
 				System.out.println(lineToTraslate.toString() + this.gotLineToMove);	
 				this.gotLineToMove = true;
+				this.gui.getpCenterPanel().changeColor(this.lineToTraslate, Color.GRAY);
 			}catch(NoSuchElementException exc){
 				System.out.println("Didn't find a line here");
 			}
-		}else if(e.getButton() == MouseEvent.BUTTON3 && this.gotLineToMove) {				
+		}else if(e.getButton() == MouseEvent.BUTTON3 && this.gotLineToMove) {	
+				this.gui.getpCenterPanel().changeColor(this.lineToTraslate, this.lineToTraslate.getLineLastColor());
 				this.gotLineToMove = false; //I dropped the object		
+				this.gui.getpCenterPanel().resetVector(); //I reset the vector used by the Panel to traslate the selected line
+				this.isTraslating = false; //The object is not traslating anymore
 		}else if(e.getButton() == MouseEvent.BUTTON2 && !this.gotLineToColor) {
 			try {
 				this.lineToColor = this.gui.getpCenterPanel().getLineAtCoordinates(new Point((int)e.getX(), (int)e.getY()));
