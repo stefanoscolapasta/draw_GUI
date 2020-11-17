@@ -24,6 +24,7 @@
 - [ ] Add multiple panels
 - [ ] Introduce the image import options
 - [ ] Add eraser
+- [ ] Add customaizable tools
 - [ ] ...
 
 ## Author
