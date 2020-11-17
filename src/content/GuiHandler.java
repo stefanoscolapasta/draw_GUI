@@ -38,7 +38,6 @@ public class GuiHandler extends MouseAdapter {
         this.pEast.setBackground(Color.WHITE);
         this.pEast.setBorder(new TitledBorder("Change settings here"));
         this.setPenSizeJSlider();
-        this.getpCenterPanel().setBorder(new TitledBorder("Draw something here.."));
         this.setCenterPanelListeners();
         this.buildSettingsPanel();
         this.setFrameView();
