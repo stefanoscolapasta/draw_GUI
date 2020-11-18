@@ -59,18 +59,14 @@ public class DrawPanel extends JPanel {
      * 
      */
     public void setPenSize(final int size) {
-        for (ColoredSizedPoint c : this.line.getColoredSizedPoint()) {
-            c.setPointSize(size);
-        }
+        this.line.getColoredSizedPoint().forEach(point -> point.setPointSize(size));
     }
     /**
      * @param color is used to set the line's actual color
      * 
      */
     public void setColor(final Color color) {
-        for (ColoredSizedPoint c : this.line.getColoredSizedPoint()) {
-            c.setPointColor(color);
-        }
+        this.line.getColoredSizedPoint().forEach(point -> point.setPointColor(color));
     }
     /**
      * 
@@ -96,9 +92,7 @@ public class DrawPanel extends JPanel {
      */
     public void changeLinesColor(final Line l, final Color c) throws NoSuchElementException {
         if (l != null) {
-            for (ColoredSizedPoint p : l.getColoredSizedPoint()) {
-                p.setPointColor(c);
-            }
+            l.getColoredSizedPoint().forEach(point -> point.setPointColor(c));
         } else {
             throw new NoSuchElementException();
         }
@@ -124,10 +118,7 @@ public class DrawPanel extends JPanel {
         int xTrasl = (int) (vectorOfWhichTraslateLine.getX() - this.vectorForTraslation.getX());
         int yTrasl = (int) (vectorOfWhichTraslateLine.getY() - this.vectorForTraslation.getY());
         Point vector = new Point(xTrasl, yTrasl);
-
-        for (ColoredSizedPoint p : l.getColoredSizedPoint()) {
-            p.traslate(vector);
-        }
+        l.getColoredSizedPoint().forEach(point -> point.traslate(vector));
     }
 
     private Point findClosestPoint(final Line l, final Point a) {
@@ -157,18 +148,10 @@ public class DrawPanel extends JPanel {
      * 
      */
     public void addPoint(final int x, final int y) {
-        int lastSize = DEFALUT_SIZE;
-        Color c1 = DEFALUT_COLOR;
-        for (ColoredSizedPoint c : this.line.getColoredSizedPoint()) {
-            lastSize = c.getPointSize();
-            c1 = c.getPointColor();
-        }
-
-        if (lastSize < DEFALUT_SIZE) {
-            lastSize = DEFALUT_SIZE;
-        }
-
-        this.line.addPoint(new ColoredSizedPoint(new Point(x - (lastSize / 2), y - (lastSize / 2)), c1, lastSize));
+        this.line.addPoint(new ColoredSizedPoint(
+                new Point(x - (this.line.getLineSize() / 2), y - (this.line.getLineSize() / 2)),
+                this.line.getLineColor(),
+                this.line.getLineSize()));
     }
 
 }

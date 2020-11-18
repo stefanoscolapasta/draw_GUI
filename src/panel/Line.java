@@ -8,43 +8,42 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Line {
-	final private List<ColoredSizedPoint> points;
-	
-	public Line() {
-		this.points = new ArrayList<>();
-	}
-	
-	public void addPoint(ColoredSizedPoint p) {
-		this.points.add(p);
-	}
-	
-	public List<ColoredSizedPoint> getColoredSizedPoint(){
-		return this.points;
-	}
-	
-	public int getLineSize() {
-		int size = DrawPanel.DEFALUT_SIZE;
-		for(ColoredSizedPoint p : this.points) {
-			size = p.getPointSize();
-		}
-		return size;
-	}
-	
-	public Set<Point> getPoints(){
-		Set<Point> pointsCoordinates = new HashSet<>();
-		for(ColoredSizedPoint p : this.points) {
-			pointsCoordinates.add(p.getPointCoordinates());
-		}
-		return pointsCoordinates;
-	}
-	
-	public Color getLineLastColor() {
-		Color lastColor = DrawPanel.DEFALUT_COLOR;
-		for(ColoredSizedPoint p : this.points) {
-			lastColor = p.getPointLastColor();
-		}
-		return lastColor;
-	}
-	
-	
+    final private List<ColoredSizedPoint> points;
+    private Color actualLineColor;
+    private Color LineLastColor;
+    private int actualLineSize;
+
+    public Line() {
+        this.points = new ArrayList<>();
+    }
+
+    public Color getLineColor() {
+        this.points.forEach(point -> actualLineColor = point.getPointColor());
+        return this.actualLineColor;
+    }
+
+    public Color getLineLastColor() {
+        this.points.forEach(point -> LineLastColor = point.getPointLastColor());
+        return this.LineLastColor;
+    }
+
+    public int getLineSize() {
+        this.points.forEach(point -> actualLineSize = point.getPointSize());
+        return this.actualLineSize;
+    }
+
+    public void addPoint(ColoredSizedPoint p) {
+        this.points.add(p);
+    }
+
+    public List<ColoredSizedPoint> getColoredSizedPoint() {
+        return this.points;
+    }
+
+    public Set<Point> getPoints() {
+        Set<Point> pointsCoordinates = new HashSet<>();
+        this.points.forEach(point -> pointsCoordinates.add(point.getPointCoordinates()));
+        return pointsCoordinates;
+    }
+
 }

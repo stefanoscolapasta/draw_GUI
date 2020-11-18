@@ -70,8 +70,7 @@ public class MyMouseListener implements MouseListener, MouseMotionListener {
     public void mousePressed(final MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON3 && !this.gotLineToMove) {
             try {
-                this.lineToTraslate = this.gui.getpCenterPanel()
-                        .getLineAtCoordinates(new Point((int) e.getX(), (int) e.getY()));
+                this.lineToTraslate = this.gui.getpCenterPanel().getLineAtCoordinates(new Point((int) e.getX(), (int) e.getY()));
                 System.out.println(lineToTraslate.toString() + this.gotLineToMove);
                 this.gotLineToMove = true;
                 this.gui.getpCenterPanel().changeLinesColor(this.lineToTraslate, Color.GRAY);
