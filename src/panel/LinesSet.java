@@ -6,8 +6,9 @@ import java.util.List;
 public class LinesSet {
 	private final List<Line> linesSet;
 	
-	public LinesSet() {
+	public LinesSet(Line l) {
 		this.linesSet = new ArrayList<>();
+		this.linesSet.add(l);
 	}
 	
 	public List<Line> getLines(){

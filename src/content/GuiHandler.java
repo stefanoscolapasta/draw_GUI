@@ -19,17 +19,21 @@ public class GuiHandler extends MouseAdapter {
     private JLabel penSizeText;
     private final MyFrame frame;
     private final JPanel pEast;
+    private final JPanel pMain;
     private final JButton bDelete;
     private final JButton bSelectColor;
     private Color currentColor = Color.BLACK;
     private final MyMouseListener myListener;
 
+    //Should implement a settings class!!!
     public GuiHandler() {
         this.frame = new MyFrame("Canvas Example", new BorderLayout());
         this.frame.setResizable(true);
+        this.pMain = new JPanel(new BorderLayout());
         this.penSize = new JSlider(JSlider.HORIZONTAL, MIN_PEN_SIZE, MAX_PEN_SIZE, STARTING_PEN_SIZE);
         this.pcenterPanel = new DrawPanel();
-        this.pcenterPanel.setBorder(new TitledBorder("Draw here"));
+        this.pcenterPanel.setBackground(Color.WHITE);
+        this.pcenterPanel.setBorder(new LineBorder(Color.BLACK));
         this.pEast = new JPanel(new GridBagLayout());
         this.myListener = new MyMouseListener(this);
         this.bSelectColor = new ButtonSelectColor("Select Color", this);
@@ -59,9 +63,9 @@ public class GuiHandler extends MouseAdapter {
     }
 
     private void setFrameView() {
-        this.frame.getMainPanel().add(this.getpCenterPanel(), BorderLayout.CENTER);
-        this.frame.getMainPanel().add(this.pEast, BorderLayout.EAST);
-
+        this.pMain.add(this.pcenterPanel, BorderLayout.CENTER);
+        this.pMain.add(this.pEast, BorderLayout.LINE_END);
+        this.frame.getMainPanel().add(pMain);
     }
 
     private void setCenterPanelListeners() {

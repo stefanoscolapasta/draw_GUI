@@ -12,16 +12,13 @@ public class ButtonDeleteEverything extends JButton {
 	private static final long serialVersionUID = 1L;
 	private final GuiHandler gui;
 	
-	public ButtonDeleteEverything(String name, GuiHandler gui) {
+	public ButtonDeleteEverything(final String name, final GuiHandler gui) {
 		super(name);
 		this.gui = gui;
 		this.setBackground(GuiHandler.DEFAULT_BUTTON_COLOR);
-		this.addActionListener(new ActionListener() {		
-			public void actionPerformed(ActionEvent arg0) {
+		this.addActionListener(e -> {
 				ButtonDeleteEverything.this.gui.getpCenterPanel().deleteEverything();	
 				ButtonDeleteEverything.this.gui.getpCenterPanel().repaint();
-				
-			}
 		});	
 	}
 }

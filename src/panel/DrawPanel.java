@@ -2,20 +2,23 @@ package panel;
 
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
+
 import java.util.*;
 
 public class DrawPanel extends JPanel {
     static final Color DEFALUT_COLOR = Color.BLACK;
+    static final Color DEFALUT_BACKGROUND_COLOR = Color.WHITE;
     static final int DEFALUT_SIZE = 1;
     private static final int MAX_DISTANCE = 999999;
     private static final long serialVersionUID = 7114066347061701832L;
-    private LinesSet linesSet;
     private Line line;
+    private LinesSet linesSet;
     private Point vectorForTraslation;
 
     public DrawPanel() {
         this.line = new Line();
-        this.linesSet = new LinesSet();
+        this.linesSet = new LinesSet(line);
         this.linesSet.addLine(this.line);
     }
     /**
@@ -49,8 +52,7 @@ public class DrawPanel extends JPanel {
     public void deleteEverything() {
         this.linesSet.empty();
         this.line = new Line();
-        this.linesSet = new LinesSet();
-        this.linesSet.addLine(this.line);
+        this.linesSet = new LinesSet(this.line);
     }
     /**
      * @param size is used to set the actual line's size
