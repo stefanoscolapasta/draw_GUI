@@ -2,6 +2,7 @@ package panel;
 
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import java.util.*;
@@ -20,6 +21,8 @@ public class DrawPanel extends JPanel {
         this.line = new Line();
         this.linesSet = new LinesSet(line);
         this.linesSet.addLine(this.line);
+        this.setBackground(Color.WHITE);
+        this.setBorder(new LineBorder(Color.BLACK));
     }
     /**
      * @param g is used to set graphical shapes and settings

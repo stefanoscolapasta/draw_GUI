@@ -48,21 +48,6 @@ public class MyMouseListener implements MouseListener, MouseMotionListener {
 
     }
 
-    @Override
-    public void mouseClicked(final MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseEntered(final MouseEvent arg0) {
-
-    }
-
-    @Override
-    public void mouseExited(final MouseEvent arg0) {
-
-    }
-
     /**
      * @param e mouse event handler
      */
@@ -105,5 +90,21 @@ public class MyMouseListener implements MouseListener, MouseMotionListener {
     public void setLineToTraslate(final Line lineToTraslate) {
         this.lineToTraslate = lineToTraslate;
     }
+
+    @Override
+    public void mouseClicked(final MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(final MouseEvent arg0) {
+
+    }
+
+    @Override
+    public void mouseExited(final MouseEvent arg0) {
+
+    }
+
 
 }
