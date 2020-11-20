@@ -1,14 +1,8 @@
 package panel;
 
 import java.awt.*;
-import java.util.List;
-
 import javax.swing.*;
 import javax.swing.border.LineBorder;
-import javax.swing.border.TitledBorder;
-
-import content.Pair;
-
 import java.util.*;
 
 public class DrawPanel extends JPanel {
@@ -120,7 +114,7 @@ public class DrawPanel extends JPanel {
     public void traslateLine(final Line l, final Point vectorOfWhichTraslateLine, final boolean isTraslating) {
         if (!isTraslating) { // This way it's not recalculated every time but only the first time the object
                              // is selected for traslation
-            this.vectorForTraslation = this.findClosestPoint(l, vectorOfWhichTraslateLine);
+            this.vectorForTraslation = this.findClosestPoint(l, vectorOfWhichTraslateLine).get();
         }
         int xTrasl = (int) (vectorOfWhichTraslateLine.getX() - this.vectorForTraslation.getX());
         int yTrasl = (int) (vectorOfWhichTraslateLine.getY() - this.vectorForTraslation.getY());
@@ -128,11 +122,10 @@ public class DrawPanel extends JPanel {
         l.getColoredSizedPoint().forEach(point -> point.traslate(vector));
     }
 
-    private Point findClosestPoint(final Line l, final Point a) {
-        final Map<Point, Integer> pointsDistances = new HashMap<>();
-        l.getPoints().forEach(point -> pointsDistances.put(point, (int) point.distance(a)));
-        //pointsDistances.entrySet().stream().reduce((c,d) -> Math.min(c.getValue(), d.getValue())).get().getKey();
-        return pointsDistances.entrySet().stream().sorted(Map.Entry.comparingByValue()).findFirst().get().getKey(); 
+
+    private Optional<Point> findClosestPoint(final Line l, final Point a) {
+		return l.getPoints().stream()
+					 .min( (p1, p2) -> (int) p1.distance(a) - (int) p2.distance(a) );
     }
     /**
      * this method is used to create a new Line Object, it's invoked as soon as the mouse is released after dragging a line.
