@@ -25,6 +25,7 @@ public class PanelSettings extends JPanel {
     private static final int LARGE_V_GAP = 25;
     private final JSlider penSize;
     private final JButton bDelete;
+    private final JButton bEraser;
     private final JButton bSelectColor;
     private JLabel penSizeText;
     private final GuiHandler gui;
@@ -35,6 +36,7 @@ public class PanelSettings extends JPanel {
         this.penSize = new JSlider(JSlider.HORIZONTAL, MIN_PEN_SIZE, MAX_PEN_SIZE, STARTING_PEN_SIZE);
         this.bSelectColor = new ButtonSelectColor("Select Color", this.gui);
         this.bDelete = new ButtonDeleteEverything("Erase everything", this.gui);
+        this.bEraser = new ButtonEraser("Eraser", this.gui);
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.setBackground(Color.WHITE);
         this.setBorder(new TitledBorder("Change settings here"));
@@ -51,6 +53,8 @@ public class PanelSettings extends JPanel {
         this.add(this.bSelectColor, BorderLayout.EAST);
         this.addVerticalSpacing(this, MEDIUM_V_GAP);
         this.add(this.bDelete);
+        this.addVerticalSpacing(this, MEDIUM_V_GAP);
+        this.add(this.bEraser);
     }
 
     private void addVerticalSpacing(final JPanel target, final int ySpacing) {

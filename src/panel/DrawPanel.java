@@ -20,6 +20,8 @@ public class DrawPanel extends JPanel {
     private Line line;
     private LinesSet linesSet;
     private Point vectorForTraslation;
+    private boolean isErasing;
+    private Point actualMousePos;
 
     public DrawPanel() {
         this.line = new Line();
@@ -27,6 +29,7 @@ public class DrawPanel extends JPanel {
         this.linesSet.addLine(this.line);
         this.setBackground(Color.WHITE);
         this.setBorder(new LineBorder(Color.BLACK));
+        this.actualMousePos = new Point();
     }
     /**
      * @param g is used to set graphical shapes and settings
@@ -40,6 +43,18 @@ public class DrawPanel extends JPanel {
             for (ColoredSizedPoint c : e.getColoredSizedPoint()) {
                 if (last != null) {
                     Graphics2D g2d = (Graphics2D) g;
+                    Graphics2D g2d2 = (Graphics2D) g;
+                    try {
+                        if (this.isErasingEnabled()) {   
+                            g2d2.setColor(DEFALUT_COLOR);
+                            g2d2.setStroke(new BasicStroke(5));
+                            g2d2.drawRect((int) this.actualMousePos.getX(), (int) this.actualMousePos.getY(), 10, 11);
+                            g2d2.drawRect((int) this.actualMousePos.getX(), (int) this.actualMousePos.getY()-11, 10, 11);
+                        }
+                    } catch (Exception exc) {
+                        System.out.println(exc.getStackTrace());
+                    }
+
                     g2d.setColor(last.getPointColor());
                     g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
                     g2d.setStroke(new BasicStroke(c.getPointSize(), BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND));
@@ -51,6 +66,28 @@ public class DrawPanel extends JPanel {
                 last = new ColoredSizedPoint(c.getPointCoordinates(), c.getPointColor(), c.getPointSize());
             }
         }
+    }
+
+    /**
+     * @param erasing sets erasing condition
+     */
+    public void setErasing(final boolean erasing) {
+        this.isErasing = erasing;
+    }
+
+    /**
+     * @return this.isErasing
+     */
+    public boolean isErasingEnabled() {
+        return this.isErasing;
+    }
+
+    /**
+     * @param pos sets mouseactualPos for panel.
+     * 
+     */
+    public void setMousePos(final Point pos) {
+        this.actualMousePos = pos;
     }
     /**
      * this method deletes all lines on call.
@@ -104,6 +141,14 @@ public class DrawPanel extends JPanel {
             throw new NoSuchElementException();
         }
     }
+    /**
+     * @param l is the line to erase
+     * 
+     */
+    public void eraseLine(final Line l) {
+        this.linesSet.getLines().remove(l);
+    }
+
     /**
      * this method resets the Vector used to traslate lines/points with the RMB.
      * 
