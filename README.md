@@ -8,7 +8,7 @@
     * Draw with the pen
     ![](res/draw_example.gif)
     * Change the pen size
-    ![](res/changePenSize_example.gif)
+      **![](res/changePenSize_example.gif)**
     * Change color
     * Clear the canvas
     * Erase a line 
@@ -39,6 +39,7 @@
 * Contributors<br/>
    * [Tommaso Patriti](https://github.com/Ro0t-set)<br/>
    * [Alessandro Mazzoli](https://github.com/alemazzo)
+   * [Manuel Andruccioli](https://github.com/manuandru)
 
 ## License
 
