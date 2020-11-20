@@ -6,6 +6,7 @@
 
 * Until now **you are able** to:
     * Draw with the pen
+    ![](res/draw_example.gif)
     * Change the pen size
     * Change color
     * Clear the canvas
