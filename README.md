@@ -8,9 +8,11 @@
     * Draw with the pen
     ![](res/draw_example.gif)
     * Change the pen size
+    ![](res/changePenSize_example.gif)
     * Change color
     * Clear the canvas
     * Select a line with the RMB, move it around and re-place it always with RMB
+    ![](res/traslate_example.gif)
     * Change a line's color :
         * **HOW TO:**
             * Select a color
