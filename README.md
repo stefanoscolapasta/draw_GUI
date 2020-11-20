@@ -16,7 +16,7 @@
     * Change a line's color :
         * **HOW TO:**
             * Select a color
-            * Press on the line which color you want to change
+            * Press on the line which color you want to change with MMB
             * Color is now changed
         
     * All the rest is **WIP**<br/>
