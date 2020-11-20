@@ -46,6 +46,8 @@ public class GuiHandler extends MouseAdapter {
     private void setCenterPanelListeners() {
         this.getpCenterPanel().addMouseListener(this.myListener);
         this.getpCenterPanel().addMouseMotionListener(this.myListener);
+//        this.pEast.addMouseListener(this.myListener);
+//        this.pEast.addMouseMotionListener(this.myListener);
     }
 
     /**

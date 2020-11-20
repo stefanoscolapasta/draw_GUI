@@ -1,9 +1,13 @@
 package panel;
 
 import java.awt.*;
+import java.util.List;
+
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
+
+import content.Pair;
 
 import java.util.*;
 
@@ -125,16 +129,10 @@ public class DrawPanel extends JPanel {
     }
 
     private Point findClosestPoint(final Line l, final Point a) {
-        Point closest = new Point();
-        int minDis = MAX_DISTANCE;
-        for (Point p : l.getPoints()) {
-            int actualDis = (int) (Math.pow((p.getX() - a.getX()), 2) + Math.pow((p.getY() - a.getY()), 2));
-            if (actualDis < minDis) {
-                minDis = actualDis;
-                closest = p;
-            }
-        }
-        return closest;
+        final Map<Point, Integer> pointsDistances = new HashMap<>();
+        l.getPoints().forEach(point -> pointsDistances.put(point, (int) point.distance(a)));
+        //pointsDistances.entrySet().stream().reduce((c,d) -> Math.min(c.getValue(), d.getValue())).get().getKey();
+        return pointsDistances.entrySet().stream().sorted(Map.Entry.comparingByValue()).findFirst().get().getKey(); 
     }
     /**
      * this method is used to create a new Line Object, it's invoked as soon as the mouse is released after dragging a line.
