@@ -12,6 +12,7 @@ import panel.Line;
 public class MyMouseListener implements MouseListener, MouseMotionListener {
     private final GuiHandler gui;
     private Line lineToTraslate;
+    private Line lineToErase;
     private Line lineToColor;
     private boolean gotLineToMove = false;
     private boolean gotLineToColor = false;
@@ -20,15 +21,28 @@ public class MyMouseListener implements MouseListener, MouseMotionListener {
     public MyMouseListener(final GuiHandler gui) {
         this.gui = gui;
     }
+
     /**
      * @param e mouse event handler
      */
     public void mouseDragged(final MouseEvent e) {
-        this.gui.getpCenterPanel().addPoint(e.getX(), e.getY());
-        this.gui.getpCenterPanel().setPenSize(this.gui.getPenSize());
-        this.gui.getpCenterPanel().setColor(this.gui.getCurrentColor());
+        if (!MyMouseListener.this.gui.getpCenterPanel().isErasingEnabled()) {
+            this.gui.getpCenterPanel().addPoint(e.getX(), e.getY());
+            this.gui.getpCenterPanel().setPenSize(this.gui.getPenSize());
+            this.gui.getpCenterPanel().setColor(this.gui.getCurrentColor());
+        } else {
+            try {
+                this.lineToErase = this.gui.getpCenterPanel()
+                        .getLineAtCoordinates(new Point((int) e.getX(), (int) e.getY()));
+                this.gui.getpCenterPanel().eraseLine(this.lineToErase);
+            } catch (NoSuchElementException exc) {
+                System.out.println(exc.getMessage());
+            }
+        }
+        this.gui.getpCenterPanel().setMousePos(e.getPoint());
         this.gui.getpCenterPanel().repaint();
     }
+
     /**
      * @param e mouse event handler
      */
@@ -36,10 +50,15 @@ public class MyMouseListener implements MouseListener, MouseMotionListener {
         this.gui.getpCenterPanel().createLineObj();
         this.gui.getpCenterPanel().repaint();
     }
+
     /**
      * @param e mouse event handler
      */
     public void mouseMoved(final MouseEvent e) {
+        if (MyMouseListener.this.gui.getpCenterPanel().isErasingEnabled()) {
+            this.gui.getpCenterPanel().setMousePos(e.getPoint());
+            this.gui.getpCenterPanel().repaint();
+        }
         if (this.gotLineToMove) {
             this.gui.getpCenterPanel().traslateLine(this.lineToTraslate, new Point(e.getX(), e.getY()), isTraslating);
             this.gui.getpCenterPanel().repaint();
@@ -53,9 +72,20 @@ public class MyMouseListener implements MouseListener, MouseMotionListener {
      */
     // Devi fare una bella refactor!
     public void mousePressed(final MouseEvent e) {
-        if (e.getButton() == MouseEvent.BUTTON3 && !this.gotLineToMove) {
+        if (MyMouseListener.this.gui.getpCenterPanel().isErasingEnabled()) {
             try {
-                this.lineToTraslate = this.gui.getpCenterPanel().getLineAtCoordinates(new Point((int) e.getX(), (int) e.getY()));
+                this.lineToErase = this.gui.getpCenterPanel()
+                        .getLineAtCoordinates(new Point((int) e.getX(), (int) e.getY()));
+                this.gui.getpCenterPanel().eraseLine(this.lineToErase);
+                this.gui.getpCenterPanel().repaint();
+            } catch (NoSuchElementException exc) {
+                System.out.println("Didn't find a line here");
+            }
+
+        } else if (e.getButton() == MouseEvent.BUTTON3 && !this.gotLineToMove) {
+            try {
+                this.lineToTraslate = this.gui.getpCenterPanel()
+                        .getLineAtCoordinates(new Point((int) e.getX(), (int) e.getY()));
                 System.out.println(lineToTraslate.toString() + this.gotLineToMove);
                 this.gotLineToMove = true;
                 this.gui.getpCenterPanel().changeLinesColor(this.lineToTraslate, Color.GRAY);
@@ -85,7 +115,7 @@ public class MyMouseListener implements MouseListener, MouseMotionListener {
     }
 
     /**
-     *@param lineToTraslate sets the new line to be traslateds
+     * @param lineToTraslate sets the new line to be traslateds
      */
     public void setLineToTraslate(final Line lineToTraslate) {
         this.lineToTraslate = lineToTraslate;
@@ -105,6 +135,5 @@ public class MyMouseListener implements MouseListener, MouseMotionListener {
     public void mouseExited(final MouseEvent arg0) {
 
     }
-
 
 }

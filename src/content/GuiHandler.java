@@ -11,7 +11,7 @@ public class GuiHandler extends MouseAdapter {
     static final Color DEFAULT_PANEL_COLOR = Color.WHITE;
     private final DrawPanel pcenterPanel;
     private final MyFrame frame;
-    private final PanelSettings pEast;
+    private final PanelSettings pSettings;
     private final JPanel pDrawPanelContainer;
     private final JPanel pMain;
     private Color currentColor = Color.BLACK;
@@ -29,7 +29,7 @@ public class GuiHandler extends MouseAdapter {
         this.pcenterPanel = new DrawPanel();
         this.pDrawPanelContainer.add(this.pcenterPanel, BorderLayout.CENTER);
 
-        this.pEast = new PanelSettings(new GridBagLayout(), this);
+        this.pSettings = new PanelSettings(new GridBagLayout(), this);
 
         this.myListener = new MyMouseListener(this);
 
@@ -39,7 +39,7 @@ public class GuiHandler extends MouseAdapter {
 
     private void setFrameView() {
         this.pMain.add(this.pDrawPanelContainer, BorderLayout.CENTER);
-        this.pMain.add(this.pEast, BorderLayout.EAST);
+        this.pMain.add(this.pSettings, BorderLayout.EAST);
         this.frame.add(this.pMain);
     }
 
@@ -75,7 +75,7 @@ public class GuiHandler extends MouseAdapter {
      * @return this.penSize.getValue();
      */
     public int getPenSize() {
-        return this.pEast.getPenSizeValueFromJSlider();
+        return this.pSettings.getPenSizeValueFromJSlider();
     }
 
     /**
