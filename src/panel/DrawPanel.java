@@ -45,7 +45,7 @@ public class DrawPanel extends JPanel {
                     Graphics2D g2d = (Graphics2D) g;
                     Graphics2D g2d2 = (Graphics2D) g;
                     try {
-                        if (this.isErasingEnabled()) {   
+                        if (this.isErasingEnabled()) {
                             g2d2.setColor(DEFALUT_COLOR);
                             g2d2.setStroke(new BasicStroke(5));
                             g2d2.drawRect((int) this.actualMousePos.getX(), (int) this.actualMousePos.getY(), 10, 11);
