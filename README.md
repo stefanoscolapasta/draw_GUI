@@ -11,7 +11,8 @@
     ![](res/changePenSize_example.gif)
     * Change color
     * Clear the canvas
-    * Erase a line
+    * Erase a line 
+    ![](res/erase_example.gif)
     * Select a line with the [RMB](https://www.acronymfinder.com/Right-Mouse-Button-(RMB).html), move it around and re-place it always with RMB
     ![](res/traslate_example.gif)
     * Change a line's color :
