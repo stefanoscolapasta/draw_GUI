@@ -131,8 +131,8 @@ public class DrawPanel extends JPanel {
     private Point findClosestPoint(final Line l, final Point a) {
         final Map<Point, Integer> pointsDistances = new HashMap<>();
         l.getPoints().forEach(point -> pointsDistances.put(point, (int) point.distance(a)));
-        //pointsDistances.entrySet().stream().reduce((c,d) -> Math.min(c.getValue(), d.getValue())).get().getKey();
-        return pointsDistances.entrySet().stream().sorted(Map.Entry.comparingByValue()).findFirst().get().getKey(); 
+        return pointsDistances.entrySet().stream().min((b, c) -> b.getValue() - c.getValue()).get().getKey();
+        //Parallel option is: return pointsDistances.entrySet().stream().sorted(Map.Entry.comparingByValue()).findFirst().get().getKey(); 
     }
     /**
      * this method is used to create a new Line Object, it's invoked as soon as the mouse is released after dragging a line.
