@@ -8,7 +8,7 @@
     * Draw with the pen
     ![](res/draw_example.gif)
     * Change the pen size
-      * ![](res/changePenSize_example.gif)
+    ![](res/changePenSize_example.gif)
     * Change color
     * Clear the canvas
     * Erase a line 
