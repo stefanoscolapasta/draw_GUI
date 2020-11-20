@@ -6,10 +6,11 @@ import javax.swing.border.LineBorder;
 import java.util.*;
 
 public class DrawPanel extends JPanel {
-    static final Color DEFALUT_COLOR = Color.BLACK;
-    static final Color DEFALUT_BACKGROUND_COLOR = Color.WHITE;
-    static final int DEFALUT_SIZE = 1;
-    private static final int MAX_DISTANCE = 999999;
+    static final Color DEFAULT_COLOR = Color.BLACK;
+    static final Color DEFAULT_BACKGROUND_COLOR = Color.WHITE;
+    private static final int DEFAULT_ERASERBORDER = 5;
+    private static final int DEFAULT_ERASERHEIGHT = 18;
+    private static final int DEFAULT_ERASERWIDTH = 13;
     private static final long serialVersionUID = 7114066347061701832L;
     private Line line;
     private LinesSet linesSet;
@@ -21,8 +22,8 @@ public class DrawPanel extends JPanel {
         this.line = new Line();
         this.linesSet = new LinesSet(line);
         this.linesSet.addLine(this.line);
-        this.setBackground(Color.WHITE);
-        this.setBorder(new LineBorder(Color.BLACK));
+        this.setBackground(DEFAULT_BACKGROUND_COLOR);
+        this.setBorder(new LineBorder(DEFAULT_COLOR));
         this.actualMousePos = new Point();
     }
     /**
@@ -35,15 +36,17 @@ public class DrawPanel extends JPanel {
         for (Line e : this.linesSet.getLines()) {
             ColoredSizedPoint last = null;
             for (ColoredSizedPoint c : e.getColoredSizedPoint()) {
+
                 if (last != null) {
                     Graphics2D g2d = (Graphics2D) g;
                     Graphics2D g2d2 = (Graphics2D) g;
+
                     try {
                         if (this.isErasingEnabled()) {
-                            g2d2.setColor(DEFALUT_COLOR);
-                            g2d2.setStroke(new BasicStroke(5));
-                            g2d2.drawRect((int) this.actualMousePos.getX(), (int) this.actualMousePos.getY(), 10, 11);
-                            g2d2.drawRect((int) this.actualMousePos.getX(), (int) this.actualMousePos.getY()-11, 10, 11);
+                            g2d2.setColor(DEFAULT_COLOR);
+                            g2d2.setStroke(new BasicStroke(DEFAULT_ERASERBORDER));
+                            g2d2.drawRect((int) this.actualMousePos.getX(), (int) this.actualMousePos.getY(), DEFAULT_ERASERWIDTH, DEFAULT_ERASERHEIGHT);
+                            g2d2.drawRect((int) this.actualMousePos.getX(), ((int) this.actualMousePos.getY() - DEFAULT_ERASERHEIGHT), DEFAULT_ERASERWIDTH, DEFAULT_ERASERHEIGHT);
                         }
                     } catch (Exception exc) {
                         System.out.println(exc.getStackTrace());
@@ -57,55 +60,13 @@ public class DrawPanel extends JPanel {
                             (int) c.getPointCoordinates().getX() + (c.getPointSize() / 2),
                             (int) c.getPointCoordinates().getY() + (c.getPointSize() / 2));
                 }
+
+
                 last = new ColoredSizedPoint(c.getPointCoordinates(), c.getPointColor(), c.getPointSize());
             }
         }
     }
 
-    /**
-     * @param erasing sets erasing condition
-     */
-    public void setErasing(final boolean erasing) {
-        this.isErasing = erasing;
-    }
-
-    /**
-     * @return this.isErasing
-     */
-    public boolean isErasingEnabled() {
-        return this.isErasing;
-    }
-
-    /**
-     * @param pos sets mouseactualPos for panel.
-     * 
-     */
-    public void setMousePos(final Point pos) {
-        this.actualMousePos = pos;
-    }
-    /**
-     * this method deletes all lines on call.
-     * 
-     */
-    public void deleteEverything() {
-        this.linesSet.empty();
-        this.line = new Line();
-        this.linesSet = new LinesSet(this.line);
-    }
-    /**
-     * @param size is used to set the actual line's size
-     * 
-     */
-    public void setPenSize(final int size) {
-        this.line.getColoredSizedPoint().forEach(point -> point.setPointSize(size));
-    }
-    /**
-     * @param color is used to set the line's actual color
-     * 
-     */
-    public void setColor(final Color color) {
-        this.line.getColoredSizedPoint().forEach(point -> point.setPointColor(color));
-    }
     /**
      * 
      * @param p is used to get the line at those coordinates
@@ -168,9 +129,7 @@ public class DrawPanel extends JPanel {
     }
 
     private Optional<Point> findClosestPoint(final Line l, final Point a) {
-		return l.getPoints().stream()
-					 .min( (p1, p2) -> (int) p1.distance(a) - (int) p2.distance(a) );
-
+        return l.getPoints().stream().min((p1, p2) -> (int) p1.distance(a) - (int) p2.distance(a));
     }
     /**
      * this method is used to create a new Line Object, it's invoked as soon as the mouse is released after dragging a line.
@@ -191,6 +150,50 @@ public class DrawPanel extends JPanel {
                 new Point(x - (this.line.getLineSize() / 2), y - (this.line.getLineSize() / 2)),
                 this.line.getLineColor(),
                 this.line.getLineSize()));
+    }
+    /**
+     * @param erasing sets erasing condition
+     */
+    public void setErasing(final boolean erasing) {
+        this.isErasing = erasing;
+    }
+
+    /**
+     * @return this.isErasing
+     */
+    public boolean isErasingEnabled() {
+        return this.isErasing;
+    }
+
+    /**
+     * @param pos sets mouseactualPos for panel.
+     * 
+     */
+    public void setMousePos(final Point pos) {
+        this.actualMousePos = pos;
+    }
+    /**
+     * this method deletes all lines on call.
+     * 
+     */
+    public void deleteEverything() {
+        this.linesSet.empty();
+        this.line = new Line();
+        this.linesSet = new LinesSet(this.line);
+    }
+    /**
+     * @param size is used to set the actual line's size
+     * 
+     */
+    public void setPenSize(final int size) {
+        this.line.getColoredSizedPoint().forEach(point -> point.setPointSize(size));
+    }
+    /**
+     * @param color is used to set the line's actual color
+     * 
+     */
+    public void setColor(final Color color) {
+        this.line.getColoredSizedPoint().forEach(point -> point.setPointColor(color));
     }
 
 }
