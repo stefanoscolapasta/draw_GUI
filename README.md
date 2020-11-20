@@ -11,6 +11,7 @@
     ![](res/changePenSize_example.gif)
     * Change color
     * Clear the canvas
+    * Erase a line
     * Select a line with the [RMB](https://www.acronymfinder.com/Right-Mouse-Button-(RMB).html), move it around and re-place it always with RMB
     ![](res/traslate_example.gif)
     * Change a line's color :
@@ -26,7 +27,7 @@
 - [ ] Improve UX and UI
 - [ ] Add multiple panels
 - [ ] Introduce the image import options
-- [ ] Add eraser
+- [X] Add eraser
 - [ ] Add customizable tools
 - [ ] ...
 
