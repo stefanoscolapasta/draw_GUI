@@ -36,7 +36,7 @@ public class MyMouseListener implements MouseListener, MouseMotionListener {
                         .getLineAtCoordinates(new Point((int) e.getX(), (int) e.getY()));
                 this.gui.getpCenterPanel().eraseLine(this.lineToErase);
             } catch (NoSuchElementException exc) {
-                System.out.println(exc.getMessage());
+
             }
         }
         this.gui.getpCenterPanel().setMousePos(e.getPoint());
